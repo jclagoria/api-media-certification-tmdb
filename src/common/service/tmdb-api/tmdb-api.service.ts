@@ -8,13 +8,16 @@ import { ServiceError } from '../../../core/utils/error.manager';
 
 @Injectable()
 export class TmdbApiService {
-  private readonly URL_BASE = 'https://api.themoviedb.org/3';
-  private readonly TOKEN_ACCESS_SITE =
-    'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODdiNDNmYzJlY2UwYjEzYWYwODAzYjJjNDA3MzYzNyIsInN1YiI6IjYwNmQxZGFlMGQyZjUzMDA0MGE1OWI3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tMFZsz1GZM1ZX-WOp737Hv7ViYg4mV_ujBdT1WN4gmo';
+  private readonly URL_BASE: string;
+  private readonly TOKEN_ACCESS_SITE: string;
   constructor(
     private httpService: HttpService,
     private configService: ConfigService,
-  ) {}
+  ) {
+    this.URL_BASE = this.configService.get<string>('URL_BASE');
+    this.TOKEN_ACCESS_SITE =
+      this.configService.get<string>('TOKEN_ACCESS_SITE');
+  }
 
   makeGetRequest<T>(endpoint: string): Observable<AxiosResponse<T>> {
     const url = `${this.URL_BASE}${endpoint}`;

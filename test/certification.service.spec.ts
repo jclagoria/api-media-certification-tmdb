@@ -33,4 +33,12 @@ describe('Test for Certification Services', () => {
       '/certification/movie/list',
     );
   });
+
+  it('should call makeGetRequest and return tv certifications', async () => {
+    const result = await firstValueFrom(service.getTvCertifications());
+    expect(result).toEqual([{ id: 1, name: 'PG-13' }]);
+    expect(tmdbApiService.makeGetRequest).toHaveBeenCalledWith(
+      '/certification/tv/list',
+    );
+  });
 });

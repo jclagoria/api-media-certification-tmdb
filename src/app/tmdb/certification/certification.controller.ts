@@ -11,4 +11,9 @@ export class CertificationController {
   getMovieCertifications() {
     return this.certificationService.getMovieCertifications();
   }
+
+  @Get('tv')
+  getTvCertifications() {
+    return this.certificationService.getTvCertifications();
+  }
 }

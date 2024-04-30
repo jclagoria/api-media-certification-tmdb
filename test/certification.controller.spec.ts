@@ -18,6 +18,7 @@ describe('Test for Certifications Movies Controller', () => {
             getMovieCertifications: jest.fn(() =>
               of([{ id: 1, name: 'PG-13' }]),
             ),
+            getTvCertifications: jest.fn(() => of([{ id: 2, name: 'TV-MA' }])),
           },
         },
       ],
@@ -27,9 +28,17 @@ describe('Test for Certifications Movies Controller', () => {
     service = module.get<CertificationService>(CertificationService);
   });
 
-  it('', async () => {
-    expect(await firstValueFrom(controller.getMovieCertifications())).toEqual([
-      { id: 1, name: 'PG-13' },
-    ]);
+  it('should return an array of movie certifications', async () => {
+    const movieResults = await firstValueFrom(
+      controller.getMovieCertifications(),
+    );
+    expect(movieResults).toEqual([{ id: 1, name: 'PG-13' }]);
+    expect(service.getMovieCertifications).toHaveBeenCalled();
+  });
+
+  it('should return an array of tv certifications', async () => {
+    const tvResults = await firstValueFrom(controller.getTvCertifications());
+    expect(tvResults).toEqual([{ id: 2, name: 'TV-MA' }]);
+    expect(service.getTvCertifications).toHaveBeenCalled();
   });
 });
